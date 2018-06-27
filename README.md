@@ -11,7 +11,13 @@ To install the package run:
 devtools::install_github("mirzacengic/climatedata")
 ```
 
-#### Usage
+#### List of functions:
+
+-   `get_chelsa()` -- download current or future climatic layers for CHELSA climate.
+-   `check_models()` -- retrieve a list of available models and RCP scenarios for future climate.
+
+Usage:
+------
 
 ``` r
 library(climatedata)
