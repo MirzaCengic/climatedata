@@ -1,3 +1,6 @@
+#### Note to self (27.06.2018) -- remove raster package functions and replace fs function with base (to keep it lightweight)
+
+
 #' Get CHELSA climate data
 #'
 #' Download data from CHELSA climatologies. This function retrieves files from the server via dowload request.
