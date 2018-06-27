@@ -11,6 +11,8 @@ To install the package run:
 devtools::install_github("mirzacengic/climatedata")
 ```
 
+#### Usage
+
 ``` r
 library(climatedata)
 library(tidyverse)
@@ -36,7 +38,7 @@ chelsa_bioclim <- get_chelsa(layer = 1:19, output_dir = output_dir, period = "fu
 
 This package currently contains one function for downloading [CHELSA climate data](http://chelsa-climate.org/). It can download current and future scenarios for bioclim data. Other variables and other climate datasets should be implemented later.
 
-*Important* - `get_chelsa()` function only works on UNIX system with 7z installed. Figure out how to unzip .7z files without using external software (if possible).
+**Important** - `get_chelsa()` function only works on UNIX system with 7z installed. Figure out how to unzip .7z files without using external software (if possible).
 
 To retrieve [WorldClim data](http://worldclim.org/), use [`raster::getData()`](https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/getData) function.
 
