@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+README.Rmd
+/README_figures/*
+/data_raw/*
+/tests/*
+/Articles/*
+/Documents/*
+/Output/*
+
