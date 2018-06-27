@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+*.Rproj
 README.Rmd
 /README_figures/*
 /data_raw/*
