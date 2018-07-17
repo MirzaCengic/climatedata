@@ -10,8 +10,8 @@
 #'
 #' @param type Character. Currently only "bioclim".
 #' @param layer Numeric. Select which bioclim layer(s) is/are downloaded.
-#' You can choose to download any of 19 bioclimatic layers.
-#' To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19}to download all layers as a rasterstack. . See details \strong{ADD LATER!}
+#' You can choose to download any of 19 bioclimatic layers. Default is all layers (1:19).
+#' To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19} to download all layers as a rasterstack. . See details \strong{ADD LATER!}
 #' @param period Character. Which time period to download for climate layers. One in c("current", "future").
 #'
 #' @param model_string Character. Which climatic model to download for future period. Only available if \code{period} = "future".
@@ -25,7 +25,7 @@
 #'
 #' @param future_years Character. Which time period to download for future scenario.
 #' Available options are c("2041-2060", "2061-2080") for years 2050 and 2070.
-#' @param output_dir Directory where the output is stored. Files are downloaded to a temporary file
+#' @param output_dir Directory where the output is stored. If left blank, by default files are downloaded to \code{temp_dir}. Files are downloaded to a temporary file
 #' !!CHANGE LATER TO outdir ONE!!, and extracted to the directory. If some of the downloaded files
 #' already exist in the folder, they will be loaded instead. Delete the files from the folder manually to download again
 #'
@@ -45,11 +45,11 @@
 #' @importFrom raster raster stack
 #' @importFrom archive archive_extract
 
-get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_string, future_years,
+get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, scenario_string, future_years,
                        output_dir, temp_dir = tempdir(), tmp_keep = FALSE, return_raster = TRUE, load_old = FALSE)
 {
   # Argument checking - fail if one of 19 layers isn't requested
-  stopifnot(layer %in% 1:19, type == "bioclim", period %in% c("current", "future"))
+  stopifnot(layer %in% 1:19, type == "bioclim", period %in% c("past", "current", "future"))
 
   if (period == "future")
   {
@@ -81,7 +81,24 @@ get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_s
   # Check if input is correct
   stopifnot(layerf %in% sprintf("%02d", 1:19))
 
+  # Fork to download bioclim data for last glacial maximum (past data)
+  if (period == "past")
+  {
+    for (i in layerf) # Loop over bioclim layers
+    {
+      layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/pmip3/bioclim/CHELSA_PMIP_CCSM4_bio_", i, ".7z")
+      temporary_file <- fs::file_temp(ext = ".7z", tmp_dir = temp_dir)
+      download.file(layer_url, temporary_file)
+      # Extract archive
+      archive::archive_extract(temporary_file, dir = output_dir)
 
+      # Delete temporary files if tmp_keep argument
+      if (!tmp_keep)
+      {
+        fs::file_delete(temporary_file)
+      }
+    }
+  }
   # Loop over layers - download, unzip and remove zipped file (only bioclim for now)
   if (period == "current")
   {

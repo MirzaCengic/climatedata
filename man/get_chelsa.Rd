@@ -4,16 +4,16 @@
 \alias{get_chelsa}
 \title{Get CHELSA climate data}
 \usage{
-get_chelsa(type = "bioclim", layer, period, model_string, scenario_string,
-  future_years, output_dir, temp_dir = tempdir(), tmp_keep = FALSE,
-  return_raster = TRUE, load_old = FALSE)
+get_chelsa(type = "bioclim", layer = 1:19, period, model_string,
+  scenario_string, future_years, output_dir, temp_dir = tempdir(),
+  tmp_keep = FALSE, return_raster = TRUE, load_old = FALSE)
 }
 \arguments{
 \item{type}{Character. Currently only "bioclim".}
 
 \item{layer}{Numeric. Select which bioclim layer(s) is/are downloaded.
-You can choose to download any of 19 bioclimatic layers.
-To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19}to download all layers as a rasterstack. . See details \strong{ADD LATER!}}
+You can choose to download any of 19 bioclimatic layers. Default is all layers (1:19).
+To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19} to download all layers as a rasterstack. . See details \strong{ADD LATER!}}
 
 \item{period}{Character. Which time period to download for climate layers. One in c("current", "future").}
 
@@ -29,7 +29,7 @@ Available options are c("ACCESS1-0", "BNU-ESM", "CCSM4", "CESM1-BGC", "CESM1-CAM
 \item{future_years}{Character. Which time period to download for future scenario.
 Available options are c("2041-2060", "2061-2080") for years 2050 and 2070.}
 
-\item{output_dir}{Directory where the output is stored. Files are downloaded to a temporary file
+\item{output_dir}{Directory where the output is stored. If left blank, by default files are downloaded to \code{temp_dir}. Files are downloaded to a temporary file
 !!CHANGE LATER TO outdir ONE!!, and extracted to the directory. If some of the downloaded files
 already exist in the folder, they will be loaded instead. Delete the files from the folder manually to download again}
 
