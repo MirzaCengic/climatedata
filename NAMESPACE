@@ -2,6 +2,7 @@
 
 export(check_models)
 export(get_chelsa)
+importFrom(archive,archive_extract)
 importFrom(fs,file_temp)
 importFrom(raster,raster)
 importFrom(raster,stack)

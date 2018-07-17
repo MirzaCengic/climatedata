@@ -43,6 +43,7 @@
 #' chelsa_bioclim <- get_chelsa(layer = 1:19, output_dir = output_dir)
 #' @importFrom fs file_temp
 #' @importFrom raster raster stack
+#' @importFrom archive archive_extract
 
 get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_string, future_years,
                        output_dir, temp_dir = tempdir(), tmp_keep = FALSE, return_raster = TRUE, load_old = FALSE)
@@ -60,6 +61,11 @@ get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_s
                                   "MPI-ESM-MR", "MRI-CGCM3", "MRI-ESM1", "NorESM1-M", "bcc-csm1-1", "inmcm4"))
   }
 
+  if (missing(output_dir))
+  {
+    output_dir <- temp_dir
+  }
+
 
   # Check if files already exist in the folder
   if (load_old)
@@ -75,6 +81,7 @@ get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_s
   # Check if input is correct
   stopifnot(layerf %in% sprintf("%02d", 1:19))
 
+
   # Loop over layers - download, unzip and remove zipped file (only bioclim for now)
   if (period == "current")
   {
@@ -85,8 +92,9 @@ get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_s
       temporary_file <- fs::file_temp(ext = ".7z", tmp_dir = temp_dir)
       download.file(layer_url, temporary_file)
 
-      unzip_call <- paste0('7z e -o', output_dir," ", temporary_file)
-      system(unzip_call)
+      # Extract archive
+      archive::archive_extract(temporary_file, dir = output_dir)
+
       # Delete temporary files if tmp_keep argument
       if (!tmp_keep)
       {
@@ -114,8 +122,9 @@ get_chelsa <- function(type = "bioclim", layer, period, model_string, scenario_s
             temporary_file <- fs::file_temp(ext = ".7z", tmp_dir = temp_dir)
             download.file(layer_url, temporary_file)
 
-            unzip_call <- paste0('7z e -o', output_dir," ", temporary_file)
-            system(unzip_call)
+            # Extract archive
+            archive::archive_extract(temporary_file, dir = output_dir)
+
             if (!tmp_keep)
             {
               fs::file_delete(temporary_file)
