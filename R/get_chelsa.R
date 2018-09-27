@@ -125,23 +125,34 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
       {
         for (model_s in model_string) # Loop over climate models
         {
-          for (i in layerf) # Loop over bioclim layers
+          for (i in layer) # Loop over bioclim layers
           {
+            # New version of CHELSA future data comes as tif file...
 
-            layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/cmip5/", future_y, "/bio/",
-                                "CHELSA_bio_mon_", model_s, "_", scenario_s, "_r1i1p1_g025.nc_",
-                                i, "_", future_y, ".7z")
-            print(layer_url)
-            temporary_file <- fs::file_temp(ext = ".7z", tmp_dir = temp_dir)
-            download.file(layer_url, temporary_file)
+            layer_name <- paste0("CHELSA_bio_mon_", model_s, "_", scenario_s, "_r1i1p1_g025.nc_",
+                                 i, "_", future_y, ".tif")
+
+            layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/cmip5/", future_y, "/bio/", layer_name)
+                                # "CHELSA_bio_mon_", model_s, "_", scenario_s, "_r1i1p1_g025.nc_",
+                                # i, "_", future_y, ".7z")
+            # print(layer_url)
+            # temporary_file <- fs::file_temp(ext = ".7z", tmp_dir = temp_dir)
+
+            file_name_out <- paste0(normalizePath(output_dir), "/", layer_name)
+            if (file.exists(file_name_out))
+            {
+              cat(paste0(layer_name, " already exists in the output folder"), "\n")
+              next()
+            }
+            download.file(layer_url, file_name_out)
 
             # Extract archive
-            archive::archive_extract(temporary_file, dir = output_dir)
+            # archive::archive_extract(temporary_file, dir = output_dir)
 
-            if (!tmp_keep)
-            {
-              fs::file_delete(temporary_file)
-            }
+            # if (!tmp_keep)
+            # {
+            #   fs::file_delete(temporary_file)
+            # }
           } # Bioclim layer closing
         } # Model string closing
       } # Scenario string closing
@@ -151,8 +162,9 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
   # Return raster stack if specified (check if it works with many many future data)
   if (return_raster)
   {
-    raster_stack <- raster::stack(list.files(output_dir, pattern = "CHELSA_bio10_*.*.tif", full.names = TRUE))
-    return(raster_stack)
+    cat("Argument return_raster is currently disabled", "\n")
+    # raster_stack <- raster::stack(list.files(output_dir, pattern = "CHELSA_bio10_*.*.tif", full.names = TRUE))
+    return(NULL)
   } else {
     return(NULL) # Should this be NULL or something else
   }
