@@ -12,14 +12,10 @@
 #' @param layer Numeric. Select which bioclim layer(s) is/are downloaded.
 #' You can choose to download any of 19 bioclimatic layers. Default is all layers (1:19).
 #' To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19} to download all layers as a rasterstack. . See details \strong{ADD LATER!}
-#' @param period Character. Which time period to download for climate layers. One in c("current", "future").
+#' @param period Character. Which time period to download for climate layers. One in c("past", "current", "future").
 #'
 #' @param model_string Character. Which climatic model to download for future period. Only available if \code{period} = "future".
-#' Available options are c("ACCESS1-0", "BNU-ESM", "CCSM4", "CESM1-BGC", "CESM1-CAM5", "CMCC-CMS", "CMCC-CM",
-#' "CNRM-CM5", "CSIRO-Mk3-6-0", "CanESM2", "FGOALS-g2", "FIO-ESM", "GFDL-CM3", "GFDL-ESM2G",
-#' "GFDL-ESM2M", "GISS-E2-H-CC", "GISS-E2-H", "GISS-E2-R-CC", "GISS-E2-R", "HadGEM2-AO", "HadGEM2-CC",
-#' "IPSL-CM5A-LR", "IPSL-CM5A-MR", "MIROC-ESM-CHEM", "MIROC-ESM", "MIROC5", "MPI-ESM-LR",
-#' "MPI-ESM-MR", "MRI-CGCM3", "MRI-ESM1", "NorESM1-M", "bcc-csm1-1", "inmcm4")
+#' See \code{climatedata::check_models()} for available options.
 #'
 #' @param scenario_string Character. Which RCP scenario to download. Available options are c("rcp26", "rcp45", "rcp60", "rcp85").
 #'
@@ -132,7 +128,7 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
           for (i in layerf) # Loop over bioclim layers
           {
 
-            layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/cmip5/", future_y, "/bioclim/",
+            layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/cmip5/", future_y, "/bio/",
                                 "CHELSA_bio_mon_", model_s, "_", scenario_s, "_r1i1p1_g025.nc_",
                                 i, "_", future_y, ".7z")
             print(layer_url)

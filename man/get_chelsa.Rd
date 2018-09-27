@@ -15,14 +15,10 @@ get_chelsa(type = "bioclim", layer = 1:19, period, model_string,
 You can choose to download any of 19 bioclimatic layers. Default is all layers (1:19).
 To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19} to download all layers as a rasterstack. . See details \strong{ADD LATER!}}
 
-\item{period}{Character. Which time period to download for climate layers. One in c("current", "future").}
+\item{period}{Character. Which time period to download for climate layers. One in c("past", "current", "future").}
 
 \item{model_string}{Character. Which climatic model to download for future period. Only available if \code{period} = "future".
-Available options are c("ACCESS1-0", "BNU-ESM", "CCSM4", "CESM1-BGC", "CESM1-CAM5", "CMCC-CMS", "CMCC-CM",
-"CNRM-CM5", "CSIRO-Mk3-6-0", "CanESM2", "FGOALS-g2", "FIO-ESM", "GFDL-CM3", "GFDL-ESM2G",
-"GFDL-ESM2M", "GISS-E2-H-CC", "GISS-E2-H", "GISS-E2-R-CC", "GISS-E2-R", "HadGEM2-AO", "HadGEM2-CC",
-"IPSL-CM5A-LR", "IPSL-CM5A-MR", "MIROC-ESM-CHEM", "MIROC-ESM", "MIROC5", "MPI-ESM-LR",
-"MPI-ESM-MR", "MRI-CGCM3", "MRI-ESM1", "NorESM1-M", "bcc-csm1-1", "inmcm4")}
+See \code{climatedata::check_models()} for available options.}
 
 \item{scenario_string}{Character. Which RCP scenario to download. Available options are c("rcp26", "rcp45", "rcp60", "rcp85").}
 
