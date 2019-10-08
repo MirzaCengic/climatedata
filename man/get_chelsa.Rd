@@ -5,8 +5,7 @@
 \title{Get CHELSA climate data}
 \usage{
 get_chelsa(type = "bioclim", layer = 1:19, period, model_string,
-  scenario_string, future_years, output_dir, temp_dir = tempdir(),
-  tmp_keep = FALSE, return_raster = TRUE, load_old = FALSE)
+  scenario_string, future_years, output_dir)
 }
 \arguments{
 \item{type}{Character. Currently only "bioclim".}
@@ -17,34 +16,21 @@ To download bioclim layer 1, use \code{layer = 1}, or use \code{layer = 1:19} to
 
 \item{period}{Character. Which time period to download for climate layers. One in c("past", "current", "future").}
 
-\item{model_string}{Character. Which climatic model to download for future period. Only available if \code{period} = "future".
+\item{model_string}{Character. Which climatic model to download for past or future period. Only available if \code{period} is one of c("past", "future").
 See \code{climatedata::check_models()} for available options.}
 
-\item{scenario_string}{Character. Which RCP scenario to download. Available options are c("rcp26", "rcp45", "rcp60", "rcp85").}
+\item{scenario_string}{Character. Which climate scenario to download. Available options are c("rcp26", "rcp45", "rcp60", "rcp85", "pmip3"). RCP scenarios are only available if \code{period} = "future", and PMIP3 is available if \code{period} = "past".}
 
 \item{future_years}{Character. Which time period to download for future scenario.
 Available options are c("2041-2060", "2061-2080") for years 2050 and 2070.}
 
-\item{output_dir}{Directory where the output is stored. If left blank, by default files are downloaded to \code{temp_dir}. Files are downloaded to a temporary file
-!!CHANGE LATER TO outdir ONE!!, and extracted to the directory. If some of the downloaded files
-already exist in the folder, they will be loaded instead. Delete the files from the folder manually to download again}
-
-\item{temp_dir}{Directory in which the temporarily downloaded files will be stored. Default is \code{temp_dir} = tempdir().}
-
-\item{tmp_keep}{Logical. Should the temporary files be deleted after unzipping. Default is FALSE (files are deleted by default).}
-
-\item{return_raster}{Logical. Should the function attempt to load the downloaded files into a RasterStack.
-Default is TRUE. Otherwise NULL.}
-
-\item{load_old}{Logical. If TRUE, function will try to load files in the output_dir. Experimental. Default is FALSE.}
+\item{output_dir}{Character. Path indicating the directory in which the downloaded files will be stored. Default is the current working directory.}
 }
 \value{
 Raster* object or NULL. See \code{return_raster} argument.
 }
 \description{
 Download data from CHELSA climatologies. This function retrieves files from the server via dowload request.
-\strong{NOTE:} If CHELSA files already exist in \code{output_dir}, they will be loaded instead.
-Specify other folder or remove the files to download them. Currently the function only works on UNIX with 7zip installed and added in PATH!
 }
 \examples{
 output_dir <- milkunize("Projects/Crete/data-raw/Chelsa")
