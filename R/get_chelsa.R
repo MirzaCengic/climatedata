@@ -93,7 +93,9 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
         # layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/pmip3/bioclim/CHELSA_PMIP_CCSM4_bio_", i, ".7z")
 
         out_layer <- glue::glue("CHELSA_PMIP_{model_s}_BIO_{i}.tif")
-        layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/pmip3/bioclim/{out_layer}")
+
+          layer_url <- glue::glue("ftp://envidatrepo.wsl.ch/uploads/chelsa/chelsa_V1/pmip3/bioclim/{out_layer}")
+        # layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/pmip3/bioclim/{out_layer}")
         file_path <- paste0(path, out_layer)
 
         if (!file.exists(file_path))
@@ -124,7 +126,8 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
     {
       # layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/bioclim/integer/CHELSA_bio10_", i, ".tif")
       out_layer <- glue::glue("CHELSA_bio10_{i}.tif")
-      layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/bioclim/integer/{out_layer}")
+      layer_url <- glue::glue("ftp://envidatrepo.wsl.ch/uploads/chelsa/chelsa_V1/climatologies/bio/{out_layer}")
+      # layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/bioclim/integer/{out_layer}")
       # temporary_file <- fs::file_temp(ext = ".tif", tmp_dir = temp_dir)
       file_path <- paste0(path, out_layer)
 
@@ -165,7 +168,8 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
             layer_name <- glue::glue("CHELSA_bio_mon_{model_s}_{scenario_s}_r1i1p1_g025.nc_{i}_{future_y}_V1.2.tif")
 
             # layer_url <- paste0("https://www.wsl.ch/lud/chelsa/data/cmip5/", future_y, "/bio/", layer_name)
-            layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/cmip5/{future_y}/bio/{layer_name}")
+            layer_url <- glue::glue("ftp://envidatrepo.wsl.ch/uploads/chelsa/chelsa_V1/cmip5/{future_y}/bio/{layer_name}")
+            # layer_url <- glue::glue("https://www.wsl.ch/lud/chelsa/data/cmip5/{future_y}/bio/{layer_name}")
                                 # "CHELSA_bio_mon_", model_s, "_", scenario_s, "_r1i1p1_g025.nc_",
                                 # i, "_", future_y, ".7z")
             # print(layer_url)
@@ -192,7 +196,9 @@ get_chelsa <- function(type = "bioclim", layer = 1:19, period, model_string, sce
         } # Model string closing
       } # Scenario string closing
     } # Future years closing
-    return(stack(list.files(path, full.names = TRUE)))
+    print("Nothing returned")
+    return(NULL)
+    # return(stack(list.files(path, full.names = TRUE)))
 
   } # Period closing
 }
